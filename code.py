@@ -24,12 +24,23 @@ print(data.describe())
 # 3. Розробіть базову модель торгівлі
 data["SMA_short"] = data["Close"].rolling(window=20).mean()
 data["SMA_long"] = data["Close"].rolling(window=50).mean()
-# попередні 2 рядки рахують ковзні середні(moving average) для ціни закриття на періодах 20 та 50 днів відповідно
+# попередні 2 рядки рахують ковзні середні(moving average) для ціни закриття
+# на періодах 20 та 50 днів відповідно
 data = data.dropna()
 # видалення пропущених якщо вони є
 data["Signal"] = (data["SMA_short"] > data["SMA_long"]).astype(int)
 # створення сигналів для кожного дня
+# якщо True - 1, False - 0
 data["Position"] = data["Signal"].diff()
 # розрахунок моментів зміни сигналу
 
-
+# 4. генерація торгових сигналів
+data["Trade Signal"] = "Hold"
+# за замувчуванням для всіх днів сигнал буде hold
+data.loc[data["Position"] == 1, "Trade Signal"] = "Buy"
+# якщо відбулося перетинання ковзних середніх вгору - Buy
+# 1 змінюється на 0, типу 1-0=1
+data.loc[data["Position"] == -1, "Trade Signal"] = "Sell"
+# якщо відбулося перетинання ковзних середніх вниз - Sell
+# 0-1=-1
+print(data[["Close", "SMA_short", "SMA_long", "Signal", "Position", "Trade Signal"]].head(60))
