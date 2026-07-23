@@ -25,5 +25,11 @@ print(data.describe())
 data["SMA_short"] = data["Close"].rolling(window=20).mean()
 data["SMA_long"] = data["Close"].rolling(window=50).mean()
 # попередні 2 рядки рахують ковзні середні(moving average) для ціни закриття на періодах 20 та 50 днів відповідно
+data = data.dropna()
+# видалення пропущених якщо вони є
+data["Signal"] = (data["SMA_short"] > data["SMA_long"]).astype(int)
+# створення сигналів для кожного дня
+data["Position"] = data["Signal"].diff()
+# розрахунок моментів зміни сигналу
 
 
