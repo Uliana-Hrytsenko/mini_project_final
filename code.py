@@ -62,3 +62,12 @@ print(f"стартовий капітал: ${starting_capital:.2f}")
 print(f"кінцевий капітал: ${data['Total_Value'].iloc[-1]:.2f}")
 print(f"прибуток(витрати): ${profit:.2f}")
 # вивід всього p&l
+plt.figure()
+plt.plot(data.index, data["Close"], label="Close")
+plt.plot(data.index, data["SMA_short"], label="SMA 20")
+plt.plot(data.index, data["SMA_long"], label="SMA 50")
+plt.scatter(data[data["Position"] == 1].index, data["Close"][data["Position"] == 1], color="green", label="Buy")
+plt.scatter(data[data["Position"] == -1].index, data["Close"][data["Position"] == -1], color="red", label="Sell")
+plt.legend()
+plt.show()
+# візуалізація даних, створення графіку, легенди
