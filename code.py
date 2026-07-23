@@ -52,3 +52,13 @@ data["Return_on_strategy"] = data["Return"] * data["Signal"].shift(1)
 # дохідність за кожень день
 data["Cumulative_Strategy"] = (1 + data["Return_on_strategy"]).cumprod()
 # накопичена дохідність з початку періоду
+starting_capital = 10000
+# стартовий капітал
+data["Total_Value"] = starting_capital * data["Cumulative_Strategy"]
+# фактична дохідність на кожен день
+profit = data["Total_Value"].iloc[-1] - starting_capital
+# розрахунок прибутку
+print(f"стартовий капітал: ${starting_capital:.2f}")
+print(f"кінцевий капітал: ${data['Total_Value'].iloc[-1]:.2f}")
+print(f"прибуток(витрати): ${profit:.2f}")
+# вивід всього p&l
