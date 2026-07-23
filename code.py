@@ -44,3 +44,11 @@ data.loc[data["Position"] == -1, "Trade Signal"] = "Sell"
 # якщо відбулося перетинання ковзних середніх вниз - Sell
 # 0-1=-1
 print(data[["Close", "SMA_short", "SMA_long", "Signal", "Position", "Trade Signal"]].head(60))
+
+# 5. Розрахунок прибутку та візуалізація
+data["Return"] = data["Close"].pct_change()
+# відсоткова зміна ціни закриття
+data["Return_on_strategy"] = data["Return"] * data["Signal"].shift(1)
+# дохідність за кожень день
+data["Cumulative_Strategy"] = (1 + data["Return_on_strategy"]).cumprod()
+# накопичена дохідність з початку періоду
