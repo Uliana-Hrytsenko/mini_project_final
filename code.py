@@ -21,4 +21,9 @@ data = data.dropna()
 print(data.describe())
 # основна статистика по числових даних
 
+# 3. Розробіть базову модель торгівлі
+data["SMA_short"] = data["Close"].rolling(window=20).mean()
+data["SMA_long"] = data["Close"].rolling(window=50).mean()
+# попередні 2 рядки рахують ковзні середні(moving average) для ціни закриття на періодах 20 та 50 днів відповідно
+
 
