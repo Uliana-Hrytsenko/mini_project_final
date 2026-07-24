@@ -39,10 +39,10 @@ data["Trade Signal"] = "Hold"
 # за замувчуванням для всіх днів сигнал буде hold
 data.loc[data["Position"] == 1, "Trade Signal"] = "Buy"
 # якщо відбулося перетинання ковзних середніх вгору - Buy
-# 1 змінюється на 0, типу 1-0=1
+#  Signal змінився з 0 на 1 (1 - 0 = 1)
 data.loc[data["Position"] == -1, "Trade Signal"] = "Sell"
 # якщо відбулося перетинання ковзних середніх вниз - Sell
-# 0-1=-1
+# Signal змінився з 1 на 0 (0 - 1 = -1)
 print(data[["Close", "SMA_short", "SMA_long", "Signal", "Position", "Trade Signal"]].head(60))
 
 # 5. Розрахунок прибутку та візуалізація
